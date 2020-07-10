@@ -1,0 +1,32 @@
+##########
+VERSION
+##########
+
+export JEKYLL_VERSION=3.8
+
+##########
+CREATE TEMPLATE
+##########
+
+docker run --rm \
+  --volume="$PWD:/srv/jekyll" \
+  -it jekyll/jekyll:$JEKYLL_VERSION \
+  jekyll new website-photography
+
+##########
+BUILD SITE FROM TEMPLATE
+##########
+
+docker run --rm \
+  --volume="$PWD:/srv/jekyll" \
+  -it jekyll/jekyll:$JEKYLL_VERSION \
+  jekyll build    
+
+##########
+POP SERVER
+##########
+
+docker run --rm -p 4000:4000 \
+  --volume="$PWD:/srv/jekyll" \
+  -it jekyll/jekyll:$JEKYLL_VERSION \
+  jekyll serve
